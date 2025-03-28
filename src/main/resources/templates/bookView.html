@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Info</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <script type="text/javascript">
+    function confirmDelete() {
+        return confirm("Are You Sure, To Delete?");
+    }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 50px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-add {
+            display: block;
+            width: 220px;
+            margin: 0 auto;
+            font-size: 18px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .btn-add:hover {
+            transform: scale(1.05);
+        }
+        .table-container {
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+        }
+        .table th {
+            background: #343a40;
+            color: white;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .action-buttons a {
+            margin-right: 5px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .action-buttons a:hover {
+            transform: scale(1.1);
+        }
+        .no-records {
+            font-style: italic;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Book Information</h1>
+
+        <!-- Add Book Button -->
+        <div class="text-center mb-4">
+            <a href="index" class="btn btn-primary btn-add">➕ Add New Book</a>
+        </div>
+
+        <!-- Book Table -->
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>📖 Book ID</th>
+                            <th>📌 Book Name</th>
+                            <th>💰 Book Price</th>
+                            <th>⚙️ Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="b: ${books}">
+                            <td th:text="${b.bookId}"></td>
+                            <td th:text="${b.bookName}"></td>
+                            <td th:text="${b.bookPrice}"></td>
+                            <td class="action-buttons"> 
+                                <a th:href="@{/edit(bookId=${b.bookId})}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                <a th:href="@{/delete(bookId=${b.bookId})}" class="btn btn-danger btn-sm" onclick="return confirmDelete();">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(books)}">
+                            <td colspan="4" class="no-records">No Records Found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
+</body>
+</html>
